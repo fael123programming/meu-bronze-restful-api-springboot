@@ -8,7 +8,6 @@ import com.meubronze.app.domain.Client;
 import com.meubronze.app.exception.BadRequestException;
 import com.meubronze.app.mapper.ClientMapper;
 import com.meubronze.app.repository.ClientRepository;
-import com.meubronze.app.request.client.ClientDeleteRequestBody;
 import com.meubronze.app.request.client.ClientPostRequestBody;
 import com.meubronze.app.request.client.ClientPutRequestBody;
 
@@ -24,8 +23,9 @@ public class ClientService {
         return this.clientRepository.findAll();
     }
 
-    public Client findByIdOrThrowBadRequestException(Long id)  throws BadRequestException {
-        return this.clientRepository.findById(id).orElseThrow(() -> new BadRequestException(String.format("Client %d not found", id)));
+    public Client findByIdOrThrowBadRequestException(Long id) throws BadRequestException {
+        return this.clientRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException(String.format("Client %d not found", id)));
     }
 
     @Transactional(rollbackOn = Exception.class)
@@ -44,9 +44,9 @@ public class ClientService {
         return id;
     }
 
-    public Long deleteClient(ClientDeleteRequestBody clientDeleteRequestBody) throws BadRequestException {
-        Long id = clientDeleteRequestBody.getId();
-        this.clientRepository.delete(this.findByIdOrThrowBadRequestException(id));
-        return id;
+    @Transactional(rollbackOn = Exception.class)
+    public Long deleteClient(long clientId) throws BadRequestException {
+        this.clientRepository.delete(this.findByIdOrThrowBadRequestException(clientId));
+        return clientId;
     }
 }

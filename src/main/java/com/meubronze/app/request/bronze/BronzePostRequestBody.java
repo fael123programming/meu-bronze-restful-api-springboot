@@ -19,12 +19,12 @@ public class BronzePostRequestBody {
 
     @NotNull(message = "totalSecs must not be null")
     @Min(value = 1, message = "totalSecs must be greater than zero")
-    int totalSecs;
+    private int totalSecs;
 
     @NotNull(message = "Price can't be null")
     @DecimalMin(value = "0", message = "Price must be positive")
-    BigDecimal price;
+    private BigDecimal price;
 
     @NotNull(message = "timestamp can't be null")
-    LocalDateTime timestamp;
+    private LocalDateTime timestamp;
 }
