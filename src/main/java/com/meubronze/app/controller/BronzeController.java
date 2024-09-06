@@ -29,7 +29,7 @@ public class BronzeController {
      *  Acessa os bronzes da aplicação salvos no banco de dados.
      * @return uma lista contendo os bronzes da aplicação.
      */
-    @GetMapping(path = "all")
+    @GetMapping
     public ResponseEntity<List<Bronze>> selectAllBronzes() {
         return ResponseEntity.ok(this.bronzeService.selectAllBronzes());
     }
@@ -39,7 +39,7 @@ public class BronzeController {
      * @param bronzePostRequestBody o corpo da requisição contendo os dados do bronze para serem salvos.
      * @return o ID do novo bronze inserido no banco de dados da aplicação.
      */
-    @PostMapping(path = "/post")
+    @PostMapping
     public ResponseEntity<Long> insertBronze(@RequestBody @Valid BronzePostRequestBody bronzePostRequestBody) {
         return new ResponseEntity<>(this.bronzeService.insertBronze(bronzePostRequestBody), HttpStatus.CREATED);
     }
@@ -49,7 +49,7 @@ public class BronzeController {
      * @param bronzeDeleteRequestBody o corpo da requisição contendo os IDs dos bronzes para serem removidos.
      * @return o ID do último bronze deletado.
      */
-    @DeleteMapping(path = "/delete")
+    @DeleteMapping
     public ResponseEntity<Long> deleteBronzes(@RequestBody BronzeDeleteRequestBody bronzeDeleteRequestBody) {
         return ResponseEntity.ok(this.bronzeService.deleteBronzes(bronzeDeleteRequestBody));
     }

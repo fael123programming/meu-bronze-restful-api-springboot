@@ -3,7 +3,9 @@ server:
     include-stacktrace: on_param
 #  servlet:
 #    context-path: /api/v1
-
+logging:
+  level:
+    org.springframework.security.web: DEBUG
 # Establishing the connection with a MySql database.
 spring:
   application:

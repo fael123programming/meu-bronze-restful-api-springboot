@@ -1,5 +1,7 @@
 package com.meubronze.app.config;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
@@ -48,15 +50,9 @@ public class SecurityConfig {
 //                .csrf(AbstractHttpConfigurer::disable);
 //        return httpSecurity.build();
 //    }
-
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .authorizeHttpRequests((http) -> http
-                        .anyRequest()
-                        .authenticated()
-                )
-                .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable);
         return httpSecurity.build();
     }

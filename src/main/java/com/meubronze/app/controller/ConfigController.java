@@ -3,7 +3,6 @@ package com.meubronze.app.controller;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.meubronze.app.domain.Config;
@@ -27,7 +26,7 @@ public class ConfigController {
      * Acessa a última tupla de configuração da aplicação.
      * @return a tupla de configuração vigente, isto é, a última inserida.
      */
-    @GetMapping(path = "get")
+    @GetMapping
     public ResponseEntity<Config> selectConfig() {
         return ResponseEntity.ok(configService.selectConfig());
     }
@@ -37,9 +36,8 @@ public class ConfigController {
      * @param configPostRequestBody o corpo da solicitação contendo os dados de configuração a serem inseridos.
      * @return o objeto de configuração inserido
      */
-    @PostMapping(path = "/post")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Config> insertConfig(@RequestBody @Valid ConfigPostRequestBody configPostRequestBody) {
+    @PostMapping
+    public ResponseEntity<Config> insertConfig(@RequestBody ConfigPostRequestBody configPostRequestBody) {
         return new ResponseEntity<>(configService.insertConfig(configPostRequestBody), HttpStatus.CREATED);
     }
 
@@ -48,8 +46,7 @@ public class ConfigController {
      * @param configPutRequestBody o corpo da solicitação contendo os dados de configuração a serem atualizados.
      * @return o valor ID da tupla de configuração atualizada.
      */
-    @PutMapping(path = "/put")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping
     public ResponseEntity<Long> updateConfig(@RequestBody ConfigPutRequestBody configPutRequestBody) {
         configService.updateConfig(configPutRequestBody);
         return new ResponseEntity<>(configPutRequestBody.getId(), HttpStatus.OK);
