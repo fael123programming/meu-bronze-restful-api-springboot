@@ -18,6 +18,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 //import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -28,11 +30,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Log4j2
 public class SecurityConfig {
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity
-//                .authorizeHttpRequests((http) -> http
-//                        .requestMatchers(new AntPathRequestMatcher("/config/post")).hasRole("ADMIN")
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .authorizeHttpRequests((http) -> http
+                        .requestMatchers(new AntPathRequestMatcher("/config/admin/**")).hasRole("ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/config/**")).hasRole("USER")
+                                .requestMatchers(new AntPathRequestMatcher("/client/admin/**")).hasRole("ADMIN")
+                                .requestMatchers(new AntPathRequestMatcher("/client/**")).hasRole("USER")
 //                        .requestMatchers(new AntPathRequestMatcher("/config/put")).hasRole("ADMIN")
 //                        .requestMatchers(new AntPathRequestMatcher("/client/post")).hasRole("ADMIN")
 //                        .requestMatchers(new AntPathRequestMatcher("/client/put")).hasRole("ADMIN")
@@ -42,20 +47,20 @@ public class SecurityConfig {
 //                        .requestMatchers(new AntPathRequestMatcher("/config/get")).hasRole("USER")
 //                        .requestMatchers(new AntPathRequestMatcher("/client/all")).hasRole("USER")
 //                        .requestMatchers(new AntPathRequestMatcher("/bronze/all")).hasRole("USER")
-//                        .anyRequest()
-//                        .authenticated()
-//                )
-//                .httpBasic(Customizer.withDefaults())
-//                .formLogin(Customizer.withDefaults())
-//                .csrf(AbstractHttpConfigurer::disable);
-//        return httpSecurity.build();
-//    }
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
+                        .anyRequest()
+                        .authenticated()
+                )
+                .httpBasic(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable);
         return httpSecurity.build();
     }
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+//        httpSecurity
+//                .csrf(AbstractHttpConfigurer::disable);
+//        return httpSecurity.build();
+//    }
 
 //    @Bean
 //    public InMemoryUserDetailsManager userDetailsService() {
@@ -73,9 +78,9 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-//        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//        log.info("'rafael' encoded {}", encoder.encode("rafael"));
-//        log.info("'admin' encoded {}", encoder.encode("admin"));
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        log.info("'rafael' encoded {}", encoder.encode("rafael"));
+        log.info("'admin' encoded {}", encoder.encode("admin"));
         return authenticationConfiguration.getAuthenticationManager();
     }
 }

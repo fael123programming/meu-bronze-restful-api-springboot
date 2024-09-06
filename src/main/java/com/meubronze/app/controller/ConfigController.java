@@ -36,8 +36,8 @@ public class ConfigController {
      * @param configPostRequestBody o corpo da solicitação contendo os dados de configuração a serem inseridos.
      * @return o objeto de configuração inserido
      */
-    @PostMapping
-    public ResponseEntity<Config> insertConfig(@RequestBody ConfigPostRequestBody configPostRequestBody) {
+    @PostMapping(path = "admin")
+    public ResponseEntity<Config> insertConfig(@RequestBody @Valid ConfigPostRequestBody configPostRequestBody) {
         return new ResponseEntity<>(configService.insertConfig(configPostRequestBody), HttpStatus.CREATED);
     }
 
@@ -46,7 +46,7 @@ public class ConfigController {
      * @param configPutRequestBody o corpo da solicitação contendo os dados de configuração a serem atualizados.
      * @return o valor ID da tupla de configuração atualizada.
      */
-    @PutMapping
+    @PutMapping(path = "admin")
     public ResponseEntity<Long> updateConfig(@RequestBody ConfigPutRequestBody configPutRequestBody) {
         configService.updateConfig(configPutRequestBody);
         return new ResponseEntity<>(configPutRequestBody.getId(), HttpStatus.OK);

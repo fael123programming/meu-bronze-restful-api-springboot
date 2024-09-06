@@ -2,6 +2,8 @@ package com.meubronze.app.service;
 
 import java.util.List;
 
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import com.meubronze.app.domain.Client;
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class ClientService {
     private final ClientRepository clientRepository;
 
@@ -30,7 +33,9 @@ public class ClientService {
 
     @Transactional(rollbackOn = Exception.class)
     public Long insertClient(ClientPostRequestBody clientPostRequestBody) {
+        log.info(clientPostRequestBody);
         Client client = this.clientRepository.save(ClientMapper.INSTANCE.toClient(clientPostRequestBody));
+//        log.info(client);
         return client.getId();
     }
 

@@ -44,6 +44,6 @@ public class Client {
     private String observations;
 
     @Lob
-    @Column(nullable = true)
+    @Column(nullable = true, columnDefinition = "MEDIUMBLOB")
     private byte[] image;
 }   

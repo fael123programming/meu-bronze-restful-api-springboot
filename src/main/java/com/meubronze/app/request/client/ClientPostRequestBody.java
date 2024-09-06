@@ -7,7 +7,15 @@ import jakarta.persistence.Lob;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClientPostRequestBody {
     @Column(unique = true)
     @NotEmpty(message = "name must have at least one character")
@@ -27,6 +35,6 @@ public class ClientPostRequestBody {
     private String observations;
 
     @Lob
-    @Column(nullable = true)
+    @Column(nullable = true, columnDefinition = "MEDIUMBLOB")
     private byte[] image;
 }

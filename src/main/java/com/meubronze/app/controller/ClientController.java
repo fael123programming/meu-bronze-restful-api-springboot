@@ -45,7 +45,7 @@ public class ClientController {
      * @param clientPostRequestBody o corpo da requisição contendo os dados do cliente para serem salvos.
      * @return o ID do novo cliente inserido no banco de dados da aplicação.
      */
-    @PostMapping
+    @PostMapping(path = "admin")
     public ResponseEntity<Long> insertClient(@RequestBody @Valid ClientPostRequestBody clientPostRequestBody) {
         return new ResponseEntity<>(this.clientService.insertClient(clientPostRequestBody), HttpStatus.CREATED);
     }
@@ -55,7 +55,7 @@ public class ClientController {
      * @param clientId o ID do cliente para ser removido.
      * @return o ID do cliente deletado do banco de dados da aplicação.
      */
-    @DeleteMapping(path = "{clientId}")
+    @DeleteMapping(path = "admin/{clientId}")
     public ResponseEntity<Long> deleteClient(@PathVariable long clientId) {
         return ResponseEntity.ok(this.clientService.deleteClient(clientId));
     }
@@ -65,7 +65,7 @@ public class ClientController {
      * @param clientPutRequestBody o corpo da requisição contendo os dados do cliente para ser atualizado.
      * @return o ID do cliente atualizado.
      */
-    @PutMapping
+    @PutMapping(path = "admin")
     public ResponseEntity<Long> updateClient(@RequestBody ClientPutRequestBody clientPutRequestBody) {
         return ResponseEntity.ok(this.clientService.updateClient(clientPutRequestBody));
     }
