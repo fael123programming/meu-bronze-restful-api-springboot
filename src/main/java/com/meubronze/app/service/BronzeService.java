@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class BronzeService {
-    private BronzeRepository bronzeRepository;
+    private final BronzeRepository bronzeRepository;
 
     public Bronze findByIdOrThrowBadRequestException(Long id) {
         return this.bronzeRepository.findById(id)

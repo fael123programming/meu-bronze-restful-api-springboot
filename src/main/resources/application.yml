@@ -1,0 +1,17 @@
+server:
+  error:
+    include-stacktrace: on_param
+#  servlet:
+#    context-path: /api/v1
+
+# Establishing the connection with a MySql database.
+spring:
+  application:
+    name: App
+  datasource:
+    url: jdbc:mysql://localhost:3306/meubronze?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update

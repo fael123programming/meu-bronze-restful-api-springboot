@@ -2,6 +2,7 @@ package com.meubronze.app.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,7 +35,7 @@ public class ClientController {
      * Acessa os clientes da aplicação salvos no banco de dados.
      * @return uma lista contendo os clientes da aplicação.
      */
-    @GetMapping
+    @GetMapping(path = "all")
     public ResponseEntity<List<Client>> selectAllClients() {
         return ResponseEntity.ok(this.clientService.selectAllClients());
     }
@@ -44,8 +45,8 @@ public class ClientController {
      * @param clientPostRequestBody o corpo da requisição contendo os dados do cliente para serem salvos.
      * @return o ID do novo cliente inserido no banco de dados da aplicação.
      */
-    @PostMapping
-    public ResponseEntity<Long> insertClient(@RequestBody ClientPostRequestBody clientPostRequestBody) {
+    @PostMapping(path = "/post")
+    public ResponseEntity<Long> insertClient(@RequestBody @Valid ClientPostRequestBody clientPostRequestBody) {
         return new ResponseEntity<>(this.clientService.insertClient(clientPostRequestBody), HttpStatus.CREATED);
     }
 
@@ -54,7 +55,7 @@ public class ClientController {
      * @param clientId o ID do cliente para ser removido.
      * @return o ID do cliente deletado do banco de dados da aplicação.
      */
-    @DeleteMapping("/{clientId}")
+    @DeleteMapping(path = "/delete/{clientId}")
     public ResponseEntity<Long> deleteClient(@PathVariable long clientId) {
         return ResponseEntity.ok(this.clientService.deleteClient(clientId));
     }
@@ -64,8 +65,8 @@ public class ClientController {
      * @param clientPutRequestBody o corpo da requisição contendo os dados do cliente para ser atualizado.
      * @return o ID do cliente atualizado.
      */
-    @PutMapping
-    public ResponseEntity<Long> updateClient(ClientPutRequestBody clientPutRequestBody) {
+    @PutMapping(path = "/put")
+    public ResponseEntity<Long> updateClient(@RequestBody ClientPutRequestBody clientPutRequestBody) {
         return ResponseEntity.ok(this.clientService.updateClient(clientPutRequestBody));
     }
 }
